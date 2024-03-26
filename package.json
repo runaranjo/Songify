@@ -1,0 +1,22 @@
+{
+  "name": "songify",
+  "version": "1.0.0",
+  "description": "Song Library project to practice guitar",
+  "main": "index.js",
+  "scripts": {
+    "start":"node server.js",
+    "devStart": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.19.1",
+    "express-ejs-layouts": "^2.5.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.0"
+  }
+}
