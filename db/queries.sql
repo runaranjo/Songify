@@ -1,0 +1,9 @@
+CREATE DATABASE songify_dev;
+
+CREATE TABLE songs (
+    song_id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    artist VARCHAR(255) NOT NULL,
+    genre VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
