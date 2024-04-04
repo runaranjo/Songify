@@ -17,7 +17,7 @@ app.set('layout', 'layouts/layout')
 
 // Middleware - APP USE
 app.use(expressLayouts)
-app.use(express.static('public'))
+app.use('/public',express.static('public'))
 app.use(express.urlencoded({ limit: '10mb', extended: false } ))
 app.use(express.json())
 

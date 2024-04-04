@@ -1,33 +1,32 @@
 const db = require('../db/db')
 
-function Song({ songTitle, songArtist, songAlbum, songGenre, songKey }){
-    this.title = songTitle;
-    this.artist = songArtist;
-    this.album = songAlbum;
-    this.genre = songGenre;
-    this.key = songKey;
-}
-
-// Song.prototype.newSong = async ( songTitle, songArtist, songAlbum, songGenre, songKey ) => {
-//     // try {
-//     //     const { rows } = await db.query(
-//     //         'INSERT INTO songs (title, artist, album, genre, song_key) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-//     //         [this.title, this.artist, this.album, this.genre, this.key]
-//     //     );
-//     //     return rows[0];
-//     // } catch (error) {
-//     //     throw error;
-//     // }
-
-//     console.log(this.title, this.artist, this.album, this.genre, this.key)
-
-
+// function Song({ songTitle, songArtist, songAlbum, songGenre, songKey }){
+//     this.title = songTitle;
+//     this.artist = songArtist;
+//     this.album = songAlbum;
+//     this.genre = songGenre;
+//     this.key = songKey;
 // }
 
+const getAllSongs = async () => {
+    try {
+        console.log('initiating query')
+        // const { rows } = await db.query('SELECT * FROM songs WHERE Title =');
+        const { rows } = await db.query('SELECT * FROM songs');
+        console.log('Query completed.')
+        return rows;
+    } catch (error) {
+        throw error;
+    }
 
-const addSong = (songTitle, songArtist, songAlbum, songGenre, songKey) => {
-    try{
-    console.log(songTitle, songArtist, songAlbum, songGenre, songKey)
+}
+
+const getSongById = async (songId) => {
+    try {
+        console.log('Initiating query')
+        const { rows } = await db.query('SELECT * FROM songs WHERE song_id = $1', [songId]);
+        console.log('Query completed.')
+        return rows;
     } catch (error) {
         throw error;
     }
@@ -51,5 +50,6 @@ const newSong = async ( songTitle, songArtist, songAlbum, songGenre, songKey ) =
 
 
 
+module.exports =  { newSong, getAllSongs, getSongById }
 
-module.exports = { Song, addSong, newSong };
+

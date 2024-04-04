@@ -1,0 +1,26 @@
+<!-- views/songs/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Songs</title>
+</head>
+<body>
+    <h1>All Songs</h1>    
+   <br>
+    <ul>
+        <% songs.forEach(song => { %>
+            <li><%= song.title %> by <%= song.artist %></li>
+        <% }); %>
+        </ul> 
+  
+
+<script>
+    
+</script>
+    
+</body>
+
+</html>
