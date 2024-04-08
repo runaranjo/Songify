@@ -1,111 +1,65 @@
-// // const song = require('../models/song')
+const songModel = require('../models/song')
 
-// // const addNewSong = async (songTitle, songArtist, songAlbum, songGenre, songKey) => {
+
+// Get the songs Route method GET
+getIndex = async (req, res) => {
+    try {
+        res.render('songs/index')
+    } catch (error) {
+        res.send(error)
+    }
+}
+
+// Get all songs in library route method GET
+getAllSongs = async (req, res) => {
+
+    try {
+        const songs = await songModel.getAllSongs();
+        // res.render("songs/allSongs", { songs })
+        res.send(songs)
+        // res.render("songs/index")
         
-// //         try {
-// //             // const song = new Song({ songTitle, songArtist, songAlbum, songGenre, songKey })
-// //             console.log(songTitle, songArtist, songAlbum, songGenre, songKey+ 'This is the console log in controller')        
-// //             await song.newSong(songTitle, songArtist, songAlbum, songGenre, songKey);
-    
-// //         } catch (error) {
-// //             console.error(error)
-// //         }
-    
-// //     }
+    } catch (error) {
+        res.send(error)
+    }
+
+}
+
+// Get song by its id route method GET
+getSongById = async (req, res) => {
+    const songId = req.params.id;
+
+    try {
+        const song = await songModel.getSongById(songId);
+        if (!song || song.length === 0) {
+            res.status(404).send("Song not found");
+        } else {
+            res.send(song);
+        }
+    } catch (error) {
+        console.error('Error fetching song by ID:', error);
+        res.status(500).send("Internal server error");
+    }
+}
+
+// Add New Song Route Method GET
+getAddNewSong = (req, res) => {
+    res.render("songs/new")
+}
+
+// Add new song to library Method POST
+
+addNewSong = async (req, res) => {
+    const {songTitle, songArtist, songAlbum, songGenre, songKey} = req.body
+    try {
+        console.log(songTitle, songArtist, songAlbum, songGenre, songKey+ ' This is the console log in routes');
+        const newSong = await songModel.newSong(songTitle, songArtist, songAlbum, songGenre, songKey);
+        res.status(200).json(newSong);
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 
-// //     const sayHi = async (songArtist) => {
-        
-// //         try {
-// //             // const song = new Song({ songTitle, songArtist, songAlbum, songGenre, songKey })
-// //             console.log('Hi! '+ songArtist)        
 
-    
-// //         } catch (error) {
-// //             console.error(error)
-// //         }
-    
-// //     }
-
-
-
-
-//     // module.exports =  addNewSong, sayHi 
-
-//      //Not being Used..yet
-
-
-//      document.querySelector('#load-songs').addEventListener('click', async () => {
-//         try {
-//             const response = await fetch('/songs'); // Make a GET request to retrieve the songs
-//             const songs = await response.json(); // Parse the response as JSON
-            
-//             // Update the HTML content to display the songs
-//             const songList = document.querySelector('#song-list');
-//             songList.innerHTML = ''; // Clear previous content
-//             songs.forEach(song => {
-//                 const listItem = document.createElement('li');
-//                 listItem.textContent = `${song.title} by ${song.artist}`;
-//                 songList.appendChild(listItem);
-//             });
-//         } catch (error) {
-//             console.error('Error loading songs:', error);
-//         }
-//     });
-
-
-//     document.querySelector('#load-songs').addEventListener('click', async () => {
-//         try {
-//             console.log('Before query')
-//             const songs = await songModel.getAllSongs(); // Make a GET request to retrieve the songs
-//             // const songs = await allSongs.json(); // Parse the response as JSON
-            
-//             // Update the HTML content to display the songs
-//             const songList = document.querySelector('#song-list');
-//             songList.innerHTML = ''; // Clear previous content
-//             songs.forEach(song => {
-//                 const listItem = document.createElement('li');
-//                 listItem.textContent = `${song.title} by ${song.artist}`;
-//                 songList.appendChild(listItem);
-//             });
-//         } catch (error) {
-//             console.error('Error loading songs:', error);
-//         }
-//      }); 
-
-
-// const songModel = require('../models/song')
-
-// const ul = document.querySelector('#show-song-list')
-// const btn = document.querySelector('#show-song-btn')
-
-// btn.addEventListener('click', () => {
-
-//     // const songs = await songModel.getAllSongs();
-
-//     songs.forEach(song => {
-//         const li = document.createElement('li');
-//         li.textContent = song;
-//         ul.appendChild(li);
-//     })
-
-// });
-
-     
-// function displaySongs( songs ) {
-         
-//     const songsList = document.getElementById("songsList");
-//     songsList.innerHTML = ""; // Clear previous content
-//     songs.forEach(function(song) {
-//         var listItem = document.createElement("li");
-//         listItem.textContent = song.title + " by " + song.artist;
-//         songsList.appendChild(listItem);
-//     });
-// }
-// // JavaScript code to handle button click
-// document.getElementById("myButton").addEventListener("click", function() {
-//     displaySongs();
-// });
-
-
-// module.exports = { displaySongs }
+module.exports = { getIndex, getAllSongs, getSongById, getAddNewSong, addNewSong }
